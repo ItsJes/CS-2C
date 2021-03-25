@@ -1,0 +1,131 @@
+#include <iostream>
+
+node * Delete(int x, node *p)
+
+{
+	if (p == NULL)
+	{
+		cout << "value does not exist";
+	}
+
+	else if (x<p->data)
+		p->left = Delete(x, p->left);
+	else if (x>p->data)
+		p->right = Delete(x, p->right);
+	else
+	{
+		if ((p->left == NULL) || (p->right == NULL))
+		{
+			node *temp;
+			if (p->left != NULL)
+				temp = p->left;
+			else
+				temp = p->right;
+			if (temp == NULL)
+			{
+				temp = p;
+				p = NULL;
+			}
+			else
+			{
+				*p = *temp;
+				Delete(temp);
+			}
+		}
+		else
+		{
+			temp = Deletemin(p->right);
+			p->data = temp->data;
+			p->right = Delete(temp->data, p->right);
+		}
+	}
+	if (p == NULL)
+		return p;
+	p->height = Max(AVLheight(p->left) + AVLheight(p->right)) + 1;
+
+	int bf = getBalance(p);
+
+	if (bf>1 && getBalance(p->left) >= 0)
+		p = LL(p);
+
+	if (bf>1 && getBalance(p->left)<0)
+		p = LR(p);
+
+	if (bf<-1 && getBalance(p->right) <= 0)
+		p = RR(p);
+
+	if (bf<-1 && getBalance(p->right)>0)
+		p = RL(p);
+
+	return p;
+
+}
+
+Deletemin(node *p)
+{
+	if (p->left == NULL)
+		return p;
+	else
+		Deletemin(p->left);
+}
+
+getBalance(node *p)
+{
+	bf = AVLheight(p->left) - AVLheight(p->right);
+	return bf;
+}
+
+AVLheight(node*p)
+{
+	int t;
+
+	if (p == NULL)
+		return -1;
+	else
+	{
+		t = p->height;
+		return t;
+	}
+}
+
+Max(int v1, v2)
+{
+	return(v1>v2 ? v1 : v2);
+}
+
+node *LL(node *p1)
+{
+	node *p2;
+
+	p2 = p1->left;
+	p1->left = p2->right;
+	p2->right = p1;
+	p1->height = Max(AVLheight(p1->left), AVLheight(p1->right)) + 1;
+	p2->height = Max(AVLheight(p2->left), p1->height) + 1;
+
+	return p2;
+}
+
+node *RR(node *p1)
+{
+	node *p2;
+	p2 = p1->right;
+	p1->right = p2->left;
+	p2->left = p1;
+	p1->height = Max(AVLheight(p1->left), AVLheight(p1->right)) + 1;
+	p2->height = Max(AVLheight(p2->right), p1->height) + 1;
+
+	return p2;
+}
+
+node *LR(node *p)
+{
+	p->left = RR(p->left);
+	return LL(p);
+}
+
+node *RL(node *p)
+{
+	p->right = LL(p->right);
+	return RR(p);
+}

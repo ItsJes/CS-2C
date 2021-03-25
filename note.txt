@@ -1,0 +1,35 @@
+template <typename Comparable>
+class OutputTree
+{
+private:
+	string output;
+public:
+	OutputTree() { output = ""; }
+	string getOutput() const { return output;  }
+	void operator()(Comparable &x)
+	{
+		stringstream ss;
+		ss << x;
+		string tmp = output + ss.str();
+		output = tmp;
+	}
+};
+
+
+int main(int argc, char * argv[]) {
+	testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}
+
+TEST(test1, test) {
+	BinarySearchTree<int>bst;
+	bst.insert(5);
+	bst.insert(4);
+	bst.insert(6);
+	bst.insert(3);
+	bst.insert(2);
+	bst.insert(7);
+	OutputTree<int> o;
+	bst.inOrderTraverse(o);
+	EXPECT_EQ(o.getOutput(), "234567");
+}

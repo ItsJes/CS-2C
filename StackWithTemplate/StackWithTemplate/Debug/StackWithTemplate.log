@@ -1,0 +1,5 @@
+﻿  StackWithTemplate.cpp
+c:\users\spark_000\documents\visual studio 2015\projects\stackwithtemplate\stackwithtemplate\list.h(19): warning C4172: returning address of local variable or temporary
+c:\users\spark_000\documents\visual studio 2015\projects\stackwithtemplate\stackwithtemplate\list.h(20): warning C4172: returning address of local variable or temporary
+  StackWithTemplate.vcxproj -> C:\Users\spark_000\documents\visual studio 2015\Projects\StackWithTemplate\Debug\StackWithTemplate.exe
+  StackWithTemplate.vcxproj -> C:\Users\spark_000\documents\visual studio 2015\Projects\StackWithTemplate\Debug\StackWithTemplate.pdb (Full PDB)
